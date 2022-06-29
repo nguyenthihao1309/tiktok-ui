@@ -2,12 +2,11 @@
 import { useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import HeadlessTippy from '@tippyjs/react/headless'
-import Tippy from '@tippyjs/react';
 
 import 'tippy.js/dist/tippy.css'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleQuestion, faCircleXmark, faCloudArrowUp, faCoins, faEarthAsia, faEllipsisVertical, faGear, faKeyboard, faMagnifyingGlass, faPlus, faSignOut, faSpinner, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faCircleQuestion, faCircleXmark, faCoins, faEarthAsia, faEllipsisVertical, faGear, faKeyboard, faPlus, faSignOut, faSpinner, faUser } from '@fortawesome/free-solid-svg-icons';
 import { Wrapper as PopperWrapper } from '~/components/Popper'
 
 import Button from '~/components/Button';
@@ -15,6 +14,9 @@ import styles from './Header.module.scss'
 import images from '~/assets/images';
 import AccountItem from '~/components/AccountItem';
 import Menu from '~/components/Popper/Menu';
+import Image from '~/components/Image';
+
+import { InboxIcon, MessageIcon, SearchIcon } from '~/components/Icons'
 
 const cx = classNames.bind(styles)
 
@@ -121,36 +123,35 @@ function Header() {
                             </button>
                             <FontAwesomeIcon className={cx('loading')} icon={faSpinner} />
                             <button className={cx('search-button')}>
-                                <FontAwesomeIcon icon={faMagnifyingGlass} />
+                                <SearchIcon className={cx('search-button-img')} />
                             </button>
                         </div>
                     </HeadlessTippy>
                 </div>
                 {/* Actions */}
                 <div className={cx('actions')}>
+                    <Button rounded className={cx('upload-button')} leftIcon={<FontAwesomeIcon icon={faPlus} />}>Upload</Button>
+
                     {currentUser ? (
-                        <>
-                            <Tippy
-                                delay={[0, 300]}
-                                content='Upload video'
-                                placement='bottom'
-                            >
-                                <button className={cx('action-button')} >
-                                    <FontAwesomeIcon icon={faCloudArrowUp} />
-                                </button>
-                            </Tippy
-                            >
-                        </>
+                        <div className={cx('action-buttons')}>
+                            <button className={cx('action-button')} >
+                                <MessageIcon />
+                            </button>
+                            <button className={cx('action-button')} >
+                                <InboxIcon />
+                            </button>
+                        </div>
                     ) : (
                         <>
-                            <Button rounded className={cx('upload-button')} leftIcon={<FontAwesomeIcon icon={faPlus} />}>Upload</Button>
                             <Button primary>Log in</Button>
                         </>
                     )}
                     <Menu Menu items={currentUser ? userMenu : MENU_ITEMS} onChange={handleMenuChange}>
                         {currentUser ? (
-                            <img className={cx('user-avatar')} alt='NguyenThiHao'
+                            <Image className={cx('user-avatar')}
+                                alt='NguyenThiHao'
                                 src='https://scontent.fdad3-5.fna.fbcdn.net/v/t39.30808-6/240941003_1028658221226732_161437722092759507_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=e3f864&_nc_ohc=THA_1Ii1sfcAX_WUdbx&_nc_ht=scontent.fdad3-5.fna&oh=00_AT9yZa_XcXEonHG-pCv6_L8eWZzmg1rh6XBunuRY5c7_Og&oe=62BCAC91'
+                                fallback='https://scontent.fdad3-5.fna.fbcdn.net/v/t39.30808-6/240941003_1028658221226732_161437722092759507_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=e3f864&_nc_ohc=THA_1Ii1sfcAX_WUdbx&_nc_ht=scontent.fdad3-5.fna&oh=00_AT9yZa_XcXEonHG-pCv6_L8eWZzmg1rh6XBunuRY5c7_Og&oe=62BCAC91'
                             />
                         ) : (
                             <button className={cx('more-button')}>
